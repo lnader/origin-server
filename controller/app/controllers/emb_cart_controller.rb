@@ -264,6 +264,10 @@ class EmbCartController < BaseController
       if component_instance.nil?
         return render_error(:unprocessable_entity, "Invalid cartridge #{id} for application #{application.name}", 168, "PATCH_APP_CARTRIDGE", "cartridge")
       end
+      
+      if component_instance.is_singleton?
+        return render_error(:unprocessable_entity, "Invalid scales_(from|to) factor provided.  Cartridge is not scalable.", 168, "PATCH_APP_CARTRIDGE", "scales_to") 
+      end
 
       application.update_component_limits(component_instance, scales_from, scales_to, additional_storage)
 

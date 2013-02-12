@@ -73,11 +73,6 @@ class RestEmbeddedCartridge < OpenShift::Model
       if not app_id.nil? and not domain_id.nil?
         self.links = {
             "GET" => Link.new("Get cartridge", "GET", URI::join(url, "domains/#{domain_id}/applications/#{app_id}/cartridges/#{name}")),
-            "UPDATE" => Link.new("Update cartridge configuration", "PUT", URI::join(url, "domains/#{domain_id}/applications/#{app_id}/cartridges/#{name}"), nil, [
-              OptionalParam.new("additional_gear_storage", "integer", "Additional filesystem storage in gigabytes on each gear having cartridge #{name}"),
-              OptionalParam.new("scales_from", "integer", "Minimum number of gears having cartridge #{name}"),
-              OptionalParam.new("scales_to", "integer", "Maximum number of gears having cartridge #{name}")
-            ]),
             "START" => Link.new("Start embedded cartridge", "POST", URI::join(url, "domains/#{domain_id}/applications/#{app_id}/cartridges/#{name}/events"), [
               Param.new("event", "string", "event", "start")
             ]),
@@ -92,6 +87,14 @@ class RestEmbeddedCartridge < OpenShift::Model
             ]),
             "DELETE" => Link.new("Delete cartridge", "DELETE", URI::join(url, "domains/#{domain_id}/applications/#{app_id}/cartridges/#{name}"))
           }
+          unless cinst.is_singleton?
+            self.links.merge!("UPDATE" => Link.new("Update cartridge configuration", "PUT", URI::join(url, "domains/#{domain_id}/applications/#{app_id}/cartridges/#{name}"), nil, [
+              OptionalParam.new("additional_gear_storage", "integer", "Additional filesystem storage in gigabytes on each gear having cartridge #{name}"),
+              OptionalParam.new("scales_from", "integer", "Minimum number of gears having cartridge #{name}"),
+              OptionalParam.new("scales_to", "integer", "Maximum number of gears having cartridge #{name}")
+            ]))
+          end
+
       end
     end
   end
