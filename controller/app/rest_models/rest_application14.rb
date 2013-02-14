@@ -1,4 +1,4 @@
-class RestApplication < OpenShift::Model
+class RestApplication14 < OpenShift::Model
   attr_accessor :framework, :creation_time, :uuid, :embedded, :aliases, :name, :gear_count, :links, :domain_id, :git_url, :app_url, :ssh_url,
       :gear_profile, :scalable, :health_check_path, :building_with, :building_app, :build_job_url, :cartridges, :initial_git_url
 
@@ -53,7 +53,6 @@ class RestApplication < OpenShift::Model
     end
 
     unless nolinks
-      blacklisted_words = OpenShift::ApplicationContainerProxy.get_blacklisted
       carts = CartridgeCache.find_cartridge_by_category("embedded").map{ |c| c.name }
 
       self.links = {
@@ -107,13 +106,7 @@ class RestApplication < OpenShift::Model
           ]
         ),
         "LIST_CARTRIDGES" => Link.new("List embedded cartridges", "GET", URI::join(url, "domains/#{@domain_id}/applications/#{@name}/cartridges")),
-        "DNS_RESOLVABLE" => Link.new("Resolve DNS", "GET", URI::join(url, "domains/#{@domain_id}/applications/#{@name}/dns_resolvable")),
-        "ADD_ALIAS" => Link.new("Create new alias", "POST", URI::join(url, "domains/#{@domain_id}/applications/#{@name}/aliases"), 
-          [Param.new("name", "string", "Alias for application",nil,blacklisted_words)], 
-          [OptionalParam.new("ssl_certificate", "string", "Content of SSL Certificate"), 
-            OptionalParam.new("private_key", "string", "Private key for the certifcate.  Required if adding a certificate"), 
-            OptionalParam.new("pass_phrase", "string", "Optional passphrase for the private key")]),
-        "LIST_ALIASES" => Link.new("List applications", "GET", URI::join(url, "domains/#{@domain_id}/applications/#{@name}/aliases")),
+        "DNS_RESOLVABLE" => Link.new("Resolve DNS", "GET", URI::join(url, "domains/#{@domain_id}/applications/#{@name}/dns_resolvable"))
       }
     end
   end

@@ -105,10 +105,16 @@ class PendingAppOpGroup
           use_parallel_job = true
         when :add_alias
           gear = get_gear_for_rollback(op)
-          result_io.append gear.remove_alias("abstract", op.args["fqdn"])
+          result_io.append gear.add_alias("abstract", op.args["fqdn"])
         when :remove_alias
           gear = get_gear_for_rollback(op)
-          result_io.append gear.add_alias("abstract", op.args["fqdn"])
+          result_io.append gear.remove_alias("abstract", op.args["fqdn"])
+        when :add_ssl_cert
+          gear = get_gear_for_rollback(op)
+          result_io.append gear.add_ssl_cert("abstract", op.args["fqdn"], op.args["ssl_certificate"], op.args["private_key"], op.args["pass_phrase"])
+        when :remove_ssl_cert
+          gear = get_gear_for_rollback(op)
+          result_io.append gear.remove_ssl_cert("abstract", op.args["fqdn"])
         end
         
         if use_parallel_job 

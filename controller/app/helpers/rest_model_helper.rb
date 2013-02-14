@@ -18,7 +18,7 @@ module RestModelHelper
     group_instances.each do |group_instance|
       component_instances = group_instance.all_component_instances
       component_instances.each do |component_instance|
-        cartridges << get_rest_cartridge(application, component_instance, group_instances, application.group_overrides)
+        cartridges << get_rest_cartridge(application, component_instance, group_instances, application.group_overrides) unless (requested_api_version == 1.0 and !component_instance.is_embeddable?)
       end
     end
     cartridges
@@ -42,6 +42,17 @@ module RestModelHelper
       RestEmbeddedCartridge10.new(cart, application, component_instance, get_url, messages, nolinks)
     else
       RestEmbeddedCartridge.new(cart, comp, application, component_instance, colocated_instances, scale, get_url, messages, nolinks)
+    end
+  end
+  
+  def get_rest_aliases(application, aliases)
+    if aliases.kind_of?(Array)
+      rest_alises = []
+      aliases.each do |al1as|
+        Rails.logger.error "#{al1as.inspect}"
+        rest_alises << RestAlias.new(application, al1as, get_url, nolinks)
+      end
+      return rest_alises
     end
   end
 end

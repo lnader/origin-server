@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         resources :cartridges, :controller => :emb_cart, :only => [:index, :show, :create, :update, :destroy], :constraints => { :id => /([\w\-]+(-)([\d]+(\.[\d]+)*)+)/ } do
             resources :events, :controller => :emb_cart_events, :only => [:create]
         end
+        resources :aliases, :controller => :alias, :constraints => { :id => /[\w]+/ }
         resources :events, :controller => :app_events, :only => [:create]
         resource :dns_resolvable, :only => [:show], :controller => :dns_resolvable
       end

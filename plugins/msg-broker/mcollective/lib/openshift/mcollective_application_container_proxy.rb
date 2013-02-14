@@ -463,8 +463,16 @@ module OpenShift
       # NOTES:
       # * calls node script oo-ssl-cert-add
       #
+<<<<<<< HEAD
       def add_ssl_cert(app, gear, ssl_cert, priv_key, server_alias, passphrase='')
         args = build_base_gear_args(app, gear)
+=======
+      def add_ssl_cert(app, gear, server_alias, ssl_cert, priv_key, passphrase='')
+        args = Hash.new
+        args['--with-app-uuid']       = app.uuid
+        args['--with-container-uuid'] = gear.uuid
+        args['--with-namespace']      = app.domain.namespace
+>>>>>>> US2448
         args['--with-ssl-cert']       = ssl_cert
         args['--with-priv-key']       = priv_key
         args['--with-alias-name']     = server_alias

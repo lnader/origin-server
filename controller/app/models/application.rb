@@ -50,7 +50,7 @@ class Application
 
   belongs_to :domain
   field :user_ids, type: Array, default: []
-  field :aliases, type: Array, default: []
+  field :aliases, class_name: Alias.name
   field :component_start_order, type: Array, default: []
   field :component_stop_order, type: Array, default: []
   field :component_configure_order, type: Array, default: []
@@ -673,13 +673,16 @@ class Application
   # == Parameters:
   # fqdn::
   #   Fully qualified domain name of the alias to associate with this application
+  # ssl_certificate:: SSL certificate to add
+  # private_key::Private key for the SSL certificate
+  # pass_phrase::Optional passphrase for the private key
   #
   # == Returns:
   # {PendingAppOps} object which tracks the progress of the operation.
   #
   # == Raises:
   # OpenShift::UserException if the alias is already been associated with an application.
-  def add_alias(fqdn)
+  def add_alias(fqdn, ssl_certificate=nil, private_key=nil, pass_phrase=nil)
     # Server aliases validate as DNS host names in accordance with RFC
     # 1123 and RFC 952.  Additionally, OpenShift does not allow an
     # Alias to be an IP address or a host in the service domain.
@@ -694,11 +697,19 @@ class Application
       raise OpenShift::UserException.new("Invalid Server Alias '#{server_alias}' specified", 105)
     end
     
+    
+    raise OpenShift::UserException.new("Privte key is required", 172) if ssl_certificate and private_key.nil? 
+    
     Application.run_in_application_lock(self) do
       raise OpenShift::UserException.new("Alias #{server_alias} is already registered", 140) if Application.where(aliases: server_alias).count > 0
       aliases.push(server_alias)
       op_group = PendingAppOpGroup.new(op_type: :add_alias, args: {"fqdn" => server_alias}, user_agent: self.user_agent)
       self.pending_op_groups.push op_group
+      if ssl_certificate and !ssl_certificate.empty?
+        pass_phrase = '' if pass_phrase.nil?
+        op_group = PendingAppOpGroup.new(op_type: :add_ssl_cert, args: {"fqdn" => server_alias, "ssl_certificate" => ssl_certificate, "private_key" => private_key, "pass_phrase" => pass_phrase}, user_agent: self.user_agent)
+        self.pending_op_groups.push op_group
+      end
       result_io = ResultIO.new
       self.run_jobs(result_io)
       result_io
@@ -714,12 +725,19 @@ class Application
   # == Returns:
   # {PendingAppOps} object which tracks the progress of the operation.
   def remove_alias(fqdn)
+    Rails.logger.error "removing alias #{fqdn}"
     fqdn = fqdn.downcase
-    
+    al1as = find_alias_by_id(fqdn)
+    Rails.logger.error "#{al1as.inspect}"
     Application.run_in_application_lock(self) do
-      raise OpenShift::UserException.new("Alias '#{fqdn}' does not exist for '#{self.name}'") unless aliases.include? fqdn
-      
+      raise OpenShift::UserException.new("Alias '#{fqdn}' does not exist for '#{self.name}'") unless aliases.find_by(name: id)
       aliases.delete(fqdn)
+      Rails.logger.error "deleted alias #{fqdn}"
+      if al1as["has_private_certificate"]
+         Rails.logger.error "removing ssl cert for  #{fqdn}"
+         op_group = PendingAppOpGroup.new(op_type: :remove_ssl_cert, args: {"fqdn" => fqdn}, user_agent: self.user_agent)
+         self.pending_op_groups.push op_group
+      end
       op_group = PendingAppOpGroup.new(op_type: :remove_alias, args: {"fqdn" => fqdn}, user_agent: self.user_agent)
       self.pending_op_groups.push op_group
       result_io = ResultIO.new
@@ -945,6 +963,23 @@ class Application
               if group_instance.gears.where(app_dns: true).count > 0
                 gear = group_instance.gears.find_by(app_dns: true)
                 op_group.pending_ops.push PendingAppOp.new(op_type: :remove_alias, args: {"group_instance_id" => group_instance.id.to_s, "gear_id" => gear.id.to_s, "fqdn" => op_group.args["fqdn"]} )
+                break
+              end
+            end
+          when :add_ssl_cert
+            self.group_instances.each do |group_instance|
+              if group_instance.gears.where(app_dns: true).count > 0
+                gear = group_instance.gears.find_by(app_dns: true)
+                op_group.pending_ops.push PendingAppOp.new(op_type: :add_ssl_cert, args: {"group_instance_id" => group_instance.id.to_s, "gear_id" => gear.id.to_s, 
+                  "fqdn" => op_group.args["fqdn"], ssl_certificate => op_group.args["ssl_certificate"], private_key => op_group.args["private_key"], pass_phrase => op_group.args["pass_phrase"] } )
+                break
+              end
+            end
+          when :remove_ssl_cert
+            self.group_instances.each do |group_instance|
+              if group_instance.gears.where(app_dns: true).count > 0
+                gear = group_instance.gears.find_by(app_dns: true)
+                op_group.pending_ops.push PendingAppOp.new(op_type: :remove_ssl_cert, args: {"group_instance_id" => group_instance.id.to_s, "gear_id" => gear.id.to_s, "fqdn" => op_group.args["fqdn"]} )
                 break
               end
             end

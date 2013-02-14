@@ -47,6 +47,7 @@ class AppEventsController < BaseController
         when "show-port", "expose-port", "conceal-port"
           return render_error(:gone, "This event (#{event}) is no longer supported.", 112, "APPLICATION_EVENT")
         when "add-alias"
+          Rails.logger.error "Adding alias #{server_alias}"
           r = application.add_alias(server_alias)
           msg = "Application #{id} has added alias"
           # msg += ": #{r.resultIO.string.chomp}" if !r.resultIO.string.empty?
