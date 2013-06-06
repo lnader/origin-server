@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Origin-server : Public open source repository for the OpenShift Origin server components" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Origin-server</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/lnader/origin-server">View on GitHub</a>
+
+          <h1 id="project_title">Origin-server</h1>
+          <h2 id="project_tagline">Public open source repository for the OpenShift Origin server components</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/lnader/origin-server/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/lnader/origin-server/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="rest-api-documentation-version-15" class="anchor" href="#rest-api-documentation-version-15"><span class="octicon octicon-link"></span></a>REST API Documentation version 1.5</h1>
+
+<h4>
+<a name="resources" class="anchor" href="#resources"><span class="octicon octicon-link"></span></a>Resources</h4>
+
+<ul>
+<li><a href="api">api</a></li>
+<li><a href="domain">domain</a></li>
+<li><a href="cartridge">cartridge</a></li>
+<li><a href="authorization">authorization</a></li>
+<li><a href="application">application</a></li>
+<li><a href="alias">alias</a></li>
+</ul><p>[api]</p>
+
+<h3>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>api</h3>
+
+<p>This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="api-entry-point" class="anchor" href="#api-entry-point"><span class="octicon octicon-link"></span></a>API entry point</h4>
+
+<pre><code>GET https://localhost/broker/rest/api
+</code></pre>
+
+<h4>
+<a name="get-environment-information" class="anchor" href="#get-environment-information"><span class="octicon octicon-link"></span></a>Get environment information</h4>
+
+<pre><code>GET https://localhost/broker/rest/environment
+</code></pre>
+
+<h4>
+<a name="get-user-information" class="anchor" href="#get-user-information"><span class="octicon octicon-link"></span></a>Get user information</h4>
+
+<pre><code>GET https://localhost/broker/rest/user
+</code></pre>
+
+<h4>
+<a name="list-quickstarts" class="anchor" href="#list-quickstarts"><span class="octicon octicon-link"></span></a>List quickstarts</h4>
+
+<pre><code>GET https://localhost:8118/api/v1/quickstarts/promoted.json
+</code></pre>
+
+<h4>
+<a name="retrieve-quickstart-with-id" class="anchor" href="#retrieve-quickstart-with-id"><span class="octicon octicon-link"></span></a>Retrieve quickstart with :id</h4>
+
+<pre><code>GET https://localhost:8118/api/v1/quickstarts/:id
+</code></pre>
+
+<h4>
+<a name="request-parameters" class="anchor" href="#request-parameters"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>:id</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="search-quickstarts" class="anchor" href="#search-quickstarts"><span class="octicon octicon-link"></span></a>Search quickstarts</h4>
+
+<pre><code>GET https://localhost:8118/api/v1/quickstarts.json
+</code></pre>
+
+<h4>
+<a name="request-parameters-1" class="anchor" href="#request-parameters-1"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>search</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><p>[domain]###domain
+This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="list-domains" class="anchor" href="#list-domains"><span class="octicon octicon-link"></span></a>List domains</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains
+</code></pre>
+
+<h4>
+<a name="create-new-domain" class="anchor" href="#create-new-domain"><span class="octicon octicon-link"></span></a>Create new domain</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains
+</code></pre>
+
+<h4>
+<a name="request-parameters-2" class="anchor" href="#request-parameters-2"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>id</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="get-domain" class="anchor" href="#get-domain"><span class="octicon octicon-link"></span></a>Get domain</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69
+</code></pre>
+
+<h4>
+<a name="update-domain" class="anchor" href="#update-domain"><span class="octicon octicon-link"></span></a>Update domain</h4>
+
+<pre><code>PUT https://localhost/broker/rest/domains/domain69
+</code></pre>
+
+<h4>
+<a name="request-parameters-3" class="anchor" href="#request-parameters-3"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>id</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="delete-domain" class="anchor" href="#delete-domain"><span class="octicon octicon-link"></span></a>Delete domain</h4>
+
+<pre><code>DELETE https://localhost/broker/rest/domains/domain69
+</code></pre>
+
+<h4>
+<a name="request-parameters-4" class="anchor" href="#request-parameters-4"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>force</td>
+<td>No</td>
+<td>[true, false]</td>
+<td>false</td>
+</tr>
+</table><p>[cartridge]###cartridge
+This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="list-cartridges" class="anchor" href="#list-cartridges"><span class="octicon octicon-link"></span></a>List cartridges</h4>
+
+<pre><code>GET https://localhost/broker/rest/cartridges
+</code></pre>
+
+<h4>
+<a name="add-embedded-cartridge" class="anchor" href="#add-embedded-cartridge"><span class="octicon octicon-link"></span></a>Add embedded cartridge</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/cartridges
+</code></pre>
+
+<h4>
+<a name="request-parameters-5" class="anchor" href="#request-parameters-5"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>name</td>
+<td>Yes</td>
+<td>["mongodb-2.2", "cron-1.4", "phpmyadmin-3.4", "haproxy-1.4", "mock-plugin-0.1", "10gen-mms-agent-0.1", "postgresql-8.4", "switchyard-0.6", "metrics-0.1", "jenkins-client-1.4", "mysql-5.1", "rockmongo-1.1"]</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>colocate_with</td>
+<td>No</td>
+<td>["diy-0.1"]</td>
+<td></td>
+</tr>
+<tr>
+<td>scales_from</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>scales_to</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>additional_storage</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>url</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+</table><h4>
+<a name="list-embedded-cartridges" class="anchor" href="#list-embedded-cartridges"><span class="octicon octicon-link"></span></a>List embedded cartridges</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/cartridges
+</code></pre>
+
+<h4>
+<a name="get-cartridge" class="anchor" href="#get-cartridge"><span class="octicon octicon-link"></span></a>Get cartridge</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2
+</code></pre>
+
+<h4>
+<a name="update-cartridge-configuration" class="anchor" href="#update-cartridge-configuration"><span class="octicon octicon-link"></span></a>Update cartridge configuration</h4>
+
+<pre><code>PUT https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2
+</code></pre>
+
+<h4>
+<a name="request-parameters-6" class="anchor" href="#request-parameters-6"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>additional_gear_storage</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>scales_from</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>scales_to</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+</table><h4>
+<a name="start-embedded-cartridge" class="anchor" href="#start-embedded-cartridge"><span class="octicon octicon-link"></span></a>Start embedded cartridge</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-7" class="anchor" href="#request-parameters-7"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["start"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="stop-cartridge" class="anchor" href="#stop-cartridge"><span class="octicon octicon-link"></span></a>Stop cartridge</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-8" class="anchor" href="#request-parameters-8"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["stop"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="restart-cartridge" class="anchor" href="#restart-cartridge"><span class="octicon octicon-link"></span></a>Restart cartridge</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-9" class="anchor" href="#request-parameters-9"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["restart"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="reload-cartridge" class="anchor" href="#reload-cartridge"><span class="octicon octicon-link"></span></a>Reload cartridge</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-10" class="anchor" href="#request-parameters-10"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["reload"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="delete-cartridge" class="anchor" href="#delete-cartridge"><span class="octicon octicon-link"></span></a>Delete cartridge</h4>
+
+<pre><code>DELETE https://localhost/broker/rest/domains/domain69/applications/application69/cartridges/mongodb-2.2
+</code></pre>
+
+<p>[authorization]###authorization
+This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="list-authorizations" class="anchor" href="#list-authorizations"><span class="octicon octicon-link"></span></a>List authorizations</h4>
+
+<pre><code>GET https://localhost/broker/rest/user/authorizations
+</code></pre>
+
+<h4>
+<a name="retrieve-authorization-id" class="anchor" href="#retrieve-authorization-id"><span class="octicon octicon-link"></span></a>Retrieve authorization :id</h4>
+
+<pre><code>GET https://localhost/broker/rest/user/authorizations/:id
+</code></pre>
+
+<h4>
+<a name="request-parameters-11" class="anchor" href="#request-parameters-11"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>:id</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="add-new-authorization" class="anchor" href="#add-new-authorization"><span class="octicon octicon-link"></span></a>Add new authorization</h4>
+
+<pre><code>POST https://localhost/broker/rest/user/authorizations
+</code></pre>
+
+<h4>
+<a name="request-parameters-12" class="anchor" href="#request-parameters-12"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>scope</td>
+<td>No</td>
+<td>["session", "read", "userinfo"]</td>
+<td>userinfo</td>
+</tr>
+<tr>
+<td>note</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>expires_in</td>
+<td>No</td>
+<td>[]</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>reuse</td>
+<td>No</td>
+<td>[true, false]</td>
+<td>false</td>
+</tr>
+</table><h4>
+<a name="get-authorization" class="anchor" href="#get-authorization"><span class="octicon octicon-link"></span></a>Get authorization</h4>
+
+<pre><code>GET https://localhost/broker/rest/user/authorizations/51b108c6701b2ea5e3000045
+</code></pre>
+
+<h4>
+<a name="update-authorization" class="anchor" href="#update-authorization"><span class="octicon octicon-link"></span></a>Update authorization</h4>
+
+<pre><code>PUT https://localhost/broker/rest/user/authorizations/51b108c6701b2ea5e3000045
+</code></pre>
+
+<h4>
+<a name="request-parameters-13" class="anchor" href="#request-parameters-13"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>note</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="delete-authorization" class="anchor" href="#delete-authorization"><span class="octicon octicon-link"></span></a>Delete authorization</h4>
+
+<pre><code>DELETE https://localhost/broker/rest/user/authorizations/51b108c6701b2ea5e3000045
+</code></pre>
+
+<p>[application]###application
+This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="list-applications" class="anchor" href="#list-applications"><span class="octicon octicon-link"></span></a>List applications</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications
+</code></pre>
+
+<h4>
+<a name="create-new-application" class="anchor" href="#create-new-application"><span class="octicon octicon-link"></span></a>Create new application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications
+</code></pre>
+
+<h4>
+<a name="request-parameters-14" class="anchor" href="#request-parameters-14"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>name</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>cartridges</td>
+<td>No</td>
+<td>["diy-0.1", "php-5.3", "jbossas-7", "perl-5.10", "mock-0.1", "mock-0.2", "zend-5.6", "jenkins-1.4", "nodejs-0.6", "jbossews-2.0", "jbossews-1.0", "jbosseap-6.0", "python-2.6", "python-2.7", "python-3.3", "ruby-1.9", "ruby-1.8"]</td>
+<td></td>
+</tr>
+<tr>
+<td>scale</td>
+<td>No</td>
+<td>[true, false]</td>
+<td>false</td>
+</tr>
+<tr>
+<td>gear_profile</td>
+<td>No</td>
+<td>["small"]</td>
+<td>small</td>
+</tr>
+<tr>
+<td>initial_git_url</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>cartridges[][url]</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+</table><h4>
+<a name="get-application" class="anchor" href="#get-application"><span class="octicon octicon-link"></span></a>Get application</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69
+</code></pre>
+
+<h4>
+<a name="get-application-descriptor" class="anchor" href="#get-application-descriptor"><span class="octicon octicon-link"></span></a>Get application descriptor</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/descriptor
+</code></pre>
+
+<h4>
+<a name="get-application-gear-groups" class="anchor" href="#get-application-gear-groups"><span class="octicon octicon-link"></span></a>Get application gear groups</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/gear_groups
+</code></pre>
+
+<h4>
+<a name="start-application" class="anchor" href="#start-application"><span class="octicon octicon-link"></span></a>Start application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-15" class="anchor" href="#request-parameters-15"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["start"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="stop-application" class="anchor" href="#stop-application"><span class="octicon octicon-link"></span></a>Stop application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-16" class="anchor" href="#request-parameters-16"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["stop"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="restart-application" class="anchor" href="#restart-application"><span class="octicon octicon-link"></span></a>Restart application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-17" class="anchor" href="#request-parameters-17"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["restart"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="force-stop-application" class="anchor" href="#force-stop-application"><span class="octicon octicon-link"></span></a>Force stop application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-18" class="anchor" href="#request-parameters-18"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["force-stop"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="scale-up-application" class="anchor" href="#scale-up-application"><span class="octicon octicon-link"></span></a>Scale up application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-19" class="anchor" href="#request-parameters-19"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["scale-up"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="scale-down-application" class="anchor" href="#scale-down-application"><span class="octicon octicon-link"></span></a>Scale down application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-20" class="anchor" href="#request-parameters-20"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["scale-down"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="tidy-the-application-framework" class="anchor" href="#tidy-the-application-framework"><span class="octicon octicon-link"></span></a>Tidy the application framework</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-21" class="anchor" href="#request-parameters-21"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["tidy"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="reload-the-application" class="anchor" href="#reload-the-application"><span class="octicon octicon-link"></span></a>Reload the application</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-22" class="anchor" href="#request-parameters-22"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["reload"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="trigger-thread-dump" class="anchor" href="#trigger-thread-dump"><span class="octicon octicon-link"></span></a>Trigger thread dump</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/events
+</code></pre>
+
+<h4>
+<a name="request-parameters-23" class="anchor" href="#request-parameters-23"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>event</td>
+<td>Yes</td>
+<td>["thread-dump"]</td>
+<td>N/A</td>
+</tr>
+</table><h4>
+<a name="delete-application" class="anchor" href="#delete-application"><span class="octicon octicon-link"></span></a>Delete application</h4>
+
+<pre><code>DELETE https://localhost/broker/rest/domains/domain69/applications/application69
+</code></pre>
+
+<h4>
+<a name="resolve-dns" class="anchor" href="#resolve-dns"><span class="octicon octicon-link"></span></a>Resolve DNS</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/dns_resolvable
+</code></pre>
+
+<p>[alias]###alias
+This is where we describe the resource. This is where we describe the resource. </p>
+
+<h4>
+<a name="create-new-alias" class="anchor" href="#create-new-alias"><span class="octicon octicon-link"></span></a>Create new alias</h4>
+
+<pre><code>POST https://localhost/broker/rest/domains/domain69/applications/application69/aliases
+</code></pre>
+
+<h4>
+<a name="request-parameters-24" class="anchor" href="#request-parameters-24"><span class="octicon octicon-link"></span></a>Request Parameters</h4>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Required</th>
+<th>Valid Options</th>
+<th>Default Value</th>
+</tr>
+<tr>
+<td>id</td>
+<td>Yes</td>
+<td>[]</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>ssl_certificate</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>private_key</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+<tr>
+<td>pass_phrase</td>
+<td>No</td>
+<td>[]</td>
+<td></td>
+</tr>
+</table><h4>
+<a name="list-application-aliases" class="anchor" href="#list-application-aliases"><span class="octicon octicon-link"></span></a>List application aliases</h4>
+
+<pre><code>GET https://localhost/broker/rest/domains/domain69/applications/application69/aliases
+</code></pre>
+
+<p>[root@ip-10-154-134-18 ~]# ./test.rb 
+Doing............ADD_DOMAIN..........
+Doing............ADD_APPLICATION..........
+Setting cartridges to the first value in ["diy-0.1", "php-5.3", "jbossas-7", "perl-5.10", "mock-0.1", "mock-0.2", "zend-5.6", "jenkins-1.4", "nodejs-0.6", "jbossews-2.0", "jbossews-1.0", "jbosseap-6.0", "python-2.6", "python-2.7", "python-3.3", "ruby-1.9", "ruby-1.8"]
+Setting scale to false
+Setting gear_profile to small
+Doing............ADD_CARTRIDGE..........
+Setting name to the first ["mongodb-2.2", "cron-1.4", "phpmyadmin-3.4", "haproxy-1.4", "mock-plugin-0.1", "10gen-mms-agent-0.1", "postgresql-8.4", "switchyard-0.6", "metrics-0.1", "jenkins-client-1.4", "mysql-5.1", "rockmongo-1.1"]
+Setting colocate_with to the first value in ["diy-0.1"]
+Doing............ADD_ALIAS..........
+[{"exit_code"=&gt;105, "field"=&gt;nil, "severity"=&gt;"error", "text"=&gt;"Invalid Server Alias 'alias19' specified"}]
+ValidationException  Invalid Server Alias 'alias19' specified
+Doing............ADD_AUTHORIZATION..........
+Setting scope to userinfo
+Setting expires_in to -1
+Setting reuse to false</p>
+
+<h1>
+<a name="rest-api-documentation-version-15-1" class="anchor" href="#rest-api-documentation-version-15-1"><span class="octicon octicon-link"></span></a>REST API Documentation version 1.5</h1>
+
+<h4>
+<a name="resources-1" class="anchor" href="#resources-1"><span class="octicon octicon-link"></span></a>Resources</h4>
+
+<ul>
+<li><a href="api">api</a></li>
+<li><a href="domain">domain</a></li>
+<li><a href="cartridge">cartridge</a></li>
+<li><a href="authorization">authorization</a></li>
+<li><a href="application">application</a></li>
+<li>
+<a href="alias">alias</a>
+###api
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####API entry point
+GET https://localhost/broker/rest/api
+####Get environment information
+GET https://localhost/broker/rest/environment
+####Get user information
+GET https://localhost/broker/rest/user
+####List quickstarts
+GET https://localhost:8118/api/v1/quickstarts/promoted.json
+####Retrieve quickstart with :id
+GET https://localhost:8118/api/v1/quickstarts/:id
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|:id | Yes | [] | N/A|
+####Search quickstarts
+GET https://localhost:8118/api/v1/quickstarts.json
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|search | Yes | [] | N/A|
+###domain
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####List domains
+GET https://localhost/broker/rest/domains
+####Create new domain
+POST https://localhost/broker/rest/domains
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|id | Yes | [] | N/A|
+####Get domain
+GET https://localhost/broker/rest/domains/domain19
+####Update domain
+PUT https://localhost/broker/rest/domains/domain19
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|id | Yes | [] | N/A|
+####Delete domain
+DELETE https://localhost/broker/rest/domains/domain19
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|force | No | [true, false] | false|
+###cartridge
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####List cartridges
+GET https://localhost/broker/rest/cartridges
+####Add embedded cartridge
+POST https://localhost/broker/rest/domains/domain19/applications/application19/cartridges
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|name | Yes | ["mongodb-2.2", "cron-1.4", "phpmyadmin-3.4", "haproxy-1.4", "mock-plugin-0.1", "10gen-mms-agent-0.1", "postgresql-8.4", "switchyard-0.6", "metrics-0.1", "jenkins-client-1.4", "mysql-5.1", "rockmongo-1.1"] | N/A|
+|colocate_with | No | ["diy-0.1"] | |
+|scales_from | No | [] | |
+|scales_to | No | [] | |
+|additional_storage | No | [] | |
+|url | No | [] | |
+####List embedded cartridges
+GET https://localhost/broker/rest/domains/domain19/applications/application19/cartridges
+####Get cartridge
+GET https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2
+####Update cartridge configuration
+PUT https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|additional_gear_storage | No | [] | |
+|scales_from | No | [] | |
+|scales_to | No | [] | |
+####Start embedded cartridge
+POST https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["start"] | N/A|
+####Stop cartridge
+POST https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["stop"] | N/A|
+####Restart cartridge
+POST https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["restart"] | N/A|
+####Reload cartridge
+POST https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["reload"] | N/A|
+####Delete cartridge
+DELETE https://localhost/broker/rest/domains/domain19/applications/application19/cartridges/mongodb-2.2
+###authorization
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####List authorizations
+GET https://localhost/broker/rest/user/authorizations
+####Retrieve authorization :id
+GET https://localhost/broker/rest/user/authorizations/:id
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|:id | Yes | [] | N/A|
+####Add new authorization
+POST https://localhost/broker/rest/user/authorizations
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|scope | No | ["session", "read", "userinfo"] | userinfo|
+|note | No | [] | |
+|expires_in | No | [] | -1|
+|reuse | No | [true, false] | false|
+####Get authorization
+GET https://localhost/broker/rest/user/authorizations/51b10975701b2ea5e3000065
+####Update authorization
+PUT https://localhost/broker/rest/user/authorizations/51b10975701b2ea5e3000065
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|note | Yes | [] | N/A|
+####Delete authorization
+DELETE https://localhost/broker/rest/user/authorizations/51b10975701b2ea5e3000065
+###application
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####List applications
+GET https://localhost/broker/rest/domains/domain19/applications
+####Create new application
+POST https://localhost/broker/rest/domains/domain19/applications
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|name | Yes | [] | N/A|
+|cartridges | No | ["diy-0.1", "php-5.3", "jbossas-7", "perl-5.10", "mock-0.1", "mock-0.2", "zend-5.6", "jenkins-1.4", "nodejs-0.6", "jbossews-2.0", "jbossews-1.0", "jbosseap-6.0", "python-2.6", "python-2.7", "python-3.3", "ruby-1.9", "ruby-1.8"] | |
+|scale | No | [true, false] | false|
+|gear_profile | No | ["small"] | small|
+|initial_git_url | No | [] | |
+|cartridges[][url] | No | [] | |
+####Get application
+GET https://localhost/broker/rest/domains/domain19/applications/application19
+####Get application descriptor
+GET https://localhost/broker/rest/domains/domain19/applications/application19/descriptor
+####Get application gear groups
+GET https://localhost/broker/rest/domains/domain19/applications/application19/gear_groups
+####Start application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["start"] | N/A|
+####Stop application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["stop"] | N/A|
+####Restart application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["restart"] | N/A|
+####Force stop application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["force-stop"] | N/A|
+####Scale up application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["scale-up"] | N/A|
+####Scale down application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["scale-down"] | N/A|
+####Tidy the application framework
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["tidy"] | N/A|
+####Reload the application
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["reload"] | N/A|
+####Trigger thread dump
+POST https://localhost/broker/rest/domains/domain19/applications/application19/events
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|event | Yes | ["thread-dump"] | N/A|
+####Delete application
+DELETE https://localhost/broker/rest/domains/domain19/applications/application19
+####Resolve DNS
+GET https://localhost/broker/rest/domains/domain19/applications/application19/dns_resolvable
+###alias
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+This is where we describe the resource. This is where we describe the resource. 
+####Create new alias
+POST https://localhost/broker/rest/domains/domain19/applications/application19/aliases
+####Request Parameters
+| Name | Required | Valid Options | Default Value |
+| --- | --- | ---| --- |
+|id | Yes | [] | N/A|
+|ssl_certificate | No | [] | |
+|private_key | No | [] | |
+|pass_phrase | No | [] | |
+####List application aliases
+GET https://localhost/broker/rest/domains/domain19/applications/application19/aliases</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Origin-server maintained by <a href="https://github.com/lnader">lnader</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
