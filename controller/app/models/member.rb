@@ -1,13 +1,13 @@
 class Member
   include Mongoid::Document
-  embedded_in :access_controlled, polymorphic: true
+  embedded_in :access_controlled
 
   # The ID this member refers to.
   field :_id, :as => :_id, type: Moped::BSON::ObjectId, default: -> { nil }
-  # The type of this member.  All members are currently CloudUsers
-  field :_type, type: String, default: ->{ self.class.name if hereditary? }
+  # The type of this member.  All members are currently users
+  field :t, :as => :type, type: String
   # The name of this member, denormalized
-  field :n,  :as => :name, type: String
+  field :n, :as => :name, type: String
   #
   # An array of implicit grants, where each grant is an array of uniquely
   # distinguishing elements ending with the role granted to the member.
@@ -42,6 +42,25 @@ class Member
     m = super
     m._id = _id
     m
+  end
+
+  def to_key
+    [_id, type]
+  end
+
+  def to_grant_array
+    if from.present?
+      from.map {|f| [to_key, f] }
+    else
+      [[to_key, nil]]
+    end
+  end
+
+  def to_find_by_params
+    {
+      :id => _id,
+      :type => type == 'user' ? nil : type
+    }
   end
 
   #
@@ -150,10 +169,37 @@ class Member
   end
 
   def member_type
-    CloudUser
+    case type
+      when 'team'
+        Team
+      else
+        CloudUser
+    end
   end
 
-  def _type=(obj)
+  def as_source
+    case type
+      when 'team'
+        [type, _id]
+      else
+        nil
+    end
+  end
+
+  def submembers
+    case type
+      when 'team'
+        Team.find(_id).members
+      else
+        []
+    end
+  end
+
+  def type
+    super || 'user'
+  end
+
+  def type=(obj)
     super obj == 'user' ? nil : obj
   end
 
