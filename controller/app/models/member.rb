@@ -91,7 +91,8 @@ class Member
     else
       self.explicit_role = role if from.blank?
       self.from ||= []
-      self.from.concat(Array(other.from)).uniq!
+      # Put the grants from the merged-in member first, then uniqify based on the sources
+      self.from = (Array(other.from) + self.from).uniq{|i| i[0...-1] }
       self.role = effective_role
     end
     self
