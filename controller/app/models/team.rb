@@ -22,8 +22,7 @@ class Team
   has_members default_role: :admin
   member_as :team
 
-  index({:name => 1}, {:unique => true})
-  index({:owner_id => 1})
+  index({'owner_id' => 1, 'name' => 1}, {:unique => true})
   create_indexes
 
   # Invoke save! with a rescue for a duplicate exception
