@@ -58,6 +58,19 @@ class Team
     [as_member]
   end
 
+  def self.accessible_criteria(to)
+    # Find all accessible domains which also have teams as members
+    # Select only the members field
+    # Flatten the list of members
+    # Limit to members of type 'team'
+    # Select ids
+    # Remove duplicates
+    peer_team_ids = Domain.accessible(to).and({'members.t' => Team.member_type}).only(:members).map(&:members).flatten(1).select {|m| m.type == 'team'}.map(&:_id).uniq
+
+    # Return teams which would normally be accessible or peer teams
+    self.or(super.selector, {:id.in => peer_team_ids})
+  end
+
   def members_changed(added, removed, changed_roles)
     pending_op = ChangeMembersTeamOp.new(members_added: added.presence, members_removed: removed.presence, roles_changed: changed_roles.presence)
     self.pending_ops.push pending_op

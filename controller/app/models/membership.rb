@@ -200,8 +200,11 @@ module Membership
     # Overrides AccessControlled#accessible
     #
     def accessible(to)
-      criteria = where(:'members._id' => to.is_a?(String) ? to : to._id, :'members.type' => to.respond_to?(:member_type) ? to.member_type : nil)
-      scope_limited(to, criteria)
+      scope_limited(to, accessible_criteria(to))
+    end
+
+    def accessible_criteria(to)
+      where(:'members._id' => to.is_a?(String) ? to : to._id, :'members.t' => to.respond_to?(:member_type) ? to.member_type : nil)
     end
 
     def to_member(arg)

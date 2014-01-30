@@ -357,4 +357,59 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal :view, explicit_role_for(d, u2)
   end
 
+  def test_team_accessible_to_owner
+    CloudUser.where(:login => 'owner').delete
+    assert u1 = CloudUser.create(:login => 'owner')
+
+    CloudUser.where(:login => 'non-owner').delete
+    assert u2 = CloudUser.create(:login => 'non-owner')
+
+    # Set up a team with one member
+    Team.where(:name => 'owned_team').delete
+    assert t = Team.create(:name => 'owned_team', :owner => u1)
+
+    assert_equal [t], Team.accessible(u1).to_a
+    assert_equal [], Team.accessible(u2).to_a
+  end
+
+  def test_team_accessible_to_member
+    CloudUser.where(:login => 'member').delete
+    assert u1 = CloudUser.create(:login => 'member')
+
+    CloudUser.where(:login => 'non-member').delete
+    assert u2 = CloudUser.create(:login => 'non-member')
+
+    # Set up a team with one member
+    Team.where(:name => 'test_team').delete
+    assert t = Team.create(:name => 'test_team')
+    assert t.add_members u1, :view
+    assert t.save
+    assert t.run_jobs
+
+    assert_equal [t], Team.accessible(u1).to_a
+    assert_equal [], Team.accessible(u2).to_a
+  end
+
+  def test_team_accessible_to_fellow_domain_member
+    Domain.where(:namespace => 'test').delete
+    assert d = Domain.create(:namespace => 'test')
+
+    CloudUser.where(:login => 'domain-member').delete
+    assert u1 = CloudUser.create(:login => 'domain-member')
+
+    CloudUser.where(:login => 'non-domain-member').delete
+    assert u2 = CloudUser.create(:login => 'non-domain-member')
+
+    # Set up a team with one member
+    Team.where(:name => 'test_team').delete
+    assert t = Team.create(:name => 'test_team')
+
+    d.add_members [u1, t], :view
+    d.save
+    d.run_jobs
+
+    assert_equal [t], Team.accessible(u1).to_a
+    assert_equal [], Team.accessible(u2).to_a
+  end
+
 end
