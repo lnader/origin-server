@@ -184,7 +184,7 @@ module Membership
       embeds_many :members, as: :access_controlled, cascade_callbacks: true
       before_save :handle_member_changes
 
-      index 'members._id' => 1
+      index({'members._id' => 1, 'members.t' => 1})
 
       class_attribute :default_role, instance_accessor: false
 
