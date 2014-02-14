@@ -19,7 +19,7 @@ class Team
   belongs_to :owner, class_name: CloudUser.name
   embeds_many :pending_ops, class_name: PendingTeamOps.name
 
-  has_members default_role: :admin
+  has_members default_role: :view
   member_as :team
 
   index({'owner_id' => 1, 'name' => 1}, {:unique => true})
