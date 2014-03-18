@@ -6,7 +6,7 @@ class DomainMembersControllerTest < ActionController::TestCase
     @controller = DomainMembersController.new
 
     @random = rand(1000000000)
-    @login = "user#{@random}"
+    @login = "owner#{@random}"
     @password = "password"
     @owner = CloudUser.new(login: @login)
     @owner.private_ssl_certificates = true
@@ -28,6 +28,7 @@ class DomainMembersControllerTest < ActionController::TestCase
     Lock.create_lock(@team_member.id)
     @team.add_members(@team_member)
     @team.save
+    @team.run_jobs
     #create another user to add to domain as member directly
     member_login = "member#{@random}"
     @member = CloudUser.new(login: member_login)
@@ -142,7 +143,8 @@ class DomainMembersControllerTest < ActionController::TestCase
     #should not be able to remove team member from domain
     post :create, {"domain_id" => @domain.namespace, "login" => @team_member.login, "role" => "none"}
     assert_response :unprocessable_entity
-    
+    # TODO: check message indicates they are not a direct member
+
     get :index , {"domain_id" => @domain.namespace}
     assert json = JSON.parse(response.body)
     assert_equal json['data'].length, 4
@@ -171,7 +173,7 @@ class DomainMembersControllerTest < ActionController::TestCase
     assert_response :success
     
     post :create, {"domain_id" => @domain.namespace, "login" => @member.login, "role" => "none"}
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_entity, response.body
     
     get :index , {"domain_id" => @domain.namespace}
     assert_response :success
@@ -411,32 +413,36 @@ class DomainMembersControllerTest < ActionController::TestCase
   test "adding updating and removing a team not owned by user" do
     
     #create a team for other member
-    @otherteam = Team.create(name: "myteam", owner_id:@member._id)
+    @otherteam = Team.create(name: "otherteam", owner_id:@member._id)
     #add domain owner to team so the team would be visible
     @otherteam.add_members(@owner)
     @otherteam.save
+    @otherteam.run_jobs
     post :create, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team", "role" => "view"}
     assert_response :not_found
     
     #now add team
-    #@domain.add_members(@otherteam)
-    #@domain.save
-    #@domain.run_jobs
-    
-    #get :show, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team"}
-    #assert_response :success
-    
+    @domain.add_members(@otherteam)
+    @domain.save
+    @domain.run_jobs
+
+    # reset controller, since we're modifying data out-of-band, and want a new instance of the controller to look up the model again
+    @controller = DomainMembersController.new
+
+    get :show, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team"}
+    assert_response :success
+
     # make sure the user can update it and remove it
-    #post :create, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team", "role" => "edit"}
-    #assert_response :success
-    
-    #post :create, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team", "role" => "none"}
-    #assert_response :success
-    
-    #get :index , {"domain_id" => @domain.namespace}
-    #assert_response :success
-    #assert json = JSON.parse(response.body)
-    #assert_equal json['data'].length , 1
+    post :create, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team", "role" => "edit"}
+    assert_response :success
+
+    post :create, {"domain_id" => @domain.namespace, "id" => @otherteam.id, "type" => "team", "role" => "none"}
+    assert_response :success
+
+    get :index , {"domain_id" => @domain.namespace}
+    assert_response :success
+    assert json = JSON.parse(response.body)
+    assert_equal json['data'].length , 1
   end
 
   test "get member in all versions" do
